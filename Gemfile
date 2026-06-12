@@ -15,6 +15,7 @@ gem "bootsnap", require: false
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "mysql2", "~> 0.5"
+  gem "dotenv-rails"
 end
 
 group :development do
