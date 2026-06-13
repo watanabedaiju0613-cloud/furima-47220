@@ -12,6 +12,7 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 gem "devise"
+gem "active_hash"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
