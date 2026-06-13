@@ -11,11 +11,15 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
+gem "devise"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "mysql2", "~> 0.5"
   gem "dotenv-rails"
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
