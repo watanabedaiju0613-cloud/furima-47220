@@ -1,7 +1,26 @@
 <%= render "shared/header" %>
-
-<h1>Items#index</h1>
-<p>Find me in app/views/items/index.html.erb</p>
+<div class='main'>
+  <div class='item-contents'>
+    <div class="subtitle">新規投稿商品</div>
+    <ul class='item-lists'>
+      <% @items.each do |item| %>
+        <li class='list'>
+          <%= link_to item_path(item) do %>
+            <div class='item-img-content'>
+              <%= image_tag item.image, class: "item-img" %>
+            </div>
+            <div class='item-info'>
+              <h3 class='item-name'><%= item.name %></h3>
+              <div class='item-price'>
+                <span><%= item.price %>円<br><%= item.shipping_fee_status.name %></span>
+              </div>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
 <%= link_to new_item_path, class: 'purchase-btn' do %>
   <span class='purchase-btn-text'>出品する</span>
