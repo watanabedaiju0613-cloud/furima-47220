@@ -61,4 +61,8 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # テスト中はバックグラウンドジョブ（ActiveStorageの画像解析など）を実行せず、
+  # DB接続の競合（Mysql2::Error: This connection is in use by Fiber）を防ぐ
+  config.active_job.queue_adapter = :test
 end
