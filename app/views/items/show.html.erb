@@ -13,12 +13,14 @@
       <span class="item-postage"><%= @item.shipping_fee_status.name %></span>
     </div>
 
-    <% if user_signed_in? && current_user.id == @item.user_id %>
+    <% if user_signed_in? %>
+      <% if current_user.id == @item.user_id %>
       <%= link_to "商品の編集", "#", class: "item-red-btn" %>
       <p class="or-text">or</p>
       <%= link_to "削除", "#", class: "item-destroy" %>
     <% else %>
       <%= link_to "購入画面に進む", "#", class: "item-red-btn" %>
+      <% end %>
     <% end %>
 
     <div class="item-explain-box">
