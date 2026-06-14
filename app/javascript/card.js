@@ -1,13 +1,20 @@
 const pay = () => {
+  if (typeof Payjp === "undefined") return;
+
   const form = document.getElementById("charge-form");
   if (!form) return;
 
   const numberForm = document.getElementById("number-form");
-  // 購入ページ以外、または既にマウント済みなら何もしない
-  if (!numberForm || numberForm.children.length > 0) return;
+  const expiryForm = document.getElementById("expiry-form");
+  const cvcForm = document.getElementById("cvc-form");
+  if (!numberForm || !expiryForm || !cvcForm) return;
 
-  const publicKey = form.dataset.payjpPublicKey;
-  const payjp = Payjp(publicKey);
+  // Turboのキャッシュ復元などで残った古いiframeを消して、必ず作り直す
+  numberForm.innerHTML = "";
+  expiryForm.innerHTML = "";
+  cvcForm.innerHTML = "";
+
+  const payjp = Payjp(form.dataset.payjpPublicKey);
   const elements = payjp.elements();
   const numberElement = elements.create("cardNumber");
   const expiryElement = elements.create("cardExpiry");
@@ -17,7 +24,7 @@ const pay = () => {
   expiryElement.mount("#expiry-form");
   cvcElement.mount("#cvc-form");
 
-  form.addEventListener("submit", (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     payjp.createToken(numberElement).then((response) => {
       if (response.error) {
@@ -32,7 +39,12 @@ const pay = () => {
         form.submit();
       }
     });
-  });
+  };
+
+  // submitリスナーの重複登録を防ぐ
+  if (form._payHandler) form.removeEventListener("submit", form._payHandler);
+  form._payHandler = submitHandler;
+  form.addEventListener("submit", submitHandler);
 };
 
 window.addEventListener("turbo:load", pay);
